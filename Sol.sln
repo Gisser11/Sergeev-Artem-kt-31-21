@@ -4,6 +4,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{8435A894-6E9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sol.Api", "Sol.Api\Sol.Api.csproj", "{0C532E17-02B9-4DB9-B0DB-DB87D25D2005}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure ", "Infrastructure ", "{E8D58BFB-A380-4872-84E7-B6CCC6672C3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sol.Domain", "Sol.Domain\Sol.Domain.csproj", "{820C4755-DDA3-450B-9734-FD8549AF63D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -11,11 +15,16 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0C532E17-02B9-4DB9-B0DB-DB87D25D2005} = {8435A894-6E94-4843-B791-28616B65025C}
+		{820C4755-DDA3-450B-9734-FD8549AF63D8} = {E8D58BFB-A380-4872-84E7-B6CCC6672C3D}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0C532E17-02B9-4DB9-B0DB-DB87D25D2005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0C532E17-02B9-4DB9-B0DB-DB87D25D2005}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C532E17-02B9-4DB9-B0DB-DB87D25D2005}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C532E17-02B9-4DB9-B0DB-DB87D25D2005}.Release|Any CPU.Build.0 = Release|Any CPU
+		{820C4755-DDA3-450B-9734-FD8549AF63D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{820C4755-DDA3-450B-9734-FD8549AF63D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{820C4755-DDA3-450B-9734-FD8549AF63D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{820C4755-DDA3-450B-9734-FD8549AF63D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

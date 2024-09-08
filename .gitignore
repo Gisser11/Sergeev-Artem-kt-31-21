@@ -1,4 +1,6 @@
 ﻿/Sol.Api/bin
 /Sol.Api/obj/
 /Sol.Api/logs
+/Sol.Domain/obj
+/Sol.Domain/bin
 /.idea

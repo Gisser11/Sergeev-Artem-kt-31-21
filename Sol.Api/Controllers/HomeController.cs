@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Sol.Domain;
+using Sol.Domain.Entity;
 
 namespace Sol.Api.Controllers;
 
@@ -7,24 +10,23 @@ namespace Sol.Api.Controllers;
 public class HomeController : ControllerBase
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly ApplicationDbContext _db;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
     {
         _logger = logger;
+        _db = db;
         _logger.LogDebug(1, "NLog injected into HomeController");
     }
 
     [HttpGet("index")]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        _logger.LogInformation("asdf");
-        _logger.LogInformation("2sdfsadf");
-        _logger.LogInformation("dfgshfdgh");
-        _logger.LogInformation("fdghcvbncvbn");
-        _logger.LogInformation("cvbnvchnfdghdf");
-        _logger.LogInformation("sdfgsdfgcvbx");
-        _logger.LogInformation("dfgshrdfghrseth");
+        var result= await _db.Set<AcademicGroup>()
+            .Include(x => x.Disciplines)
+            .Include(x => x.Students)
+            .ToListAsync();
         
-        return Ok("hello");
+        return Ok(result);
     }
 }

@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLog.Web;
+using Sol.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
@@ -8,7 +10,8 @@ logger.Debug("init main");
 try
 {
     builder.Services.AddControllers();
-
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseNpgsql("Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=mydatabase;\n"));
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
