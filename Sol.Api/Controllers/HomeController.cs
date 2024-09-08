@@ -19,12 +19,32 @@ public class HomeController : ControllerBase
         _logger.LogDebug(1, "NLog injected into HomeController");
     }
 
-    [HttpGet("index")]
-    public async Task<IActionResult> Index()
+    
+
+    [HttpGet("GetDisciplines")]
+    public async Task<IActionResult> GetDisciplines()
     {
-        var result= await _db.Set<AcademicGroup>()
-            .Include(x => x.Disciplines)
-            .Include(x => x.Students)
+        var result = await _db.Set<Discipline>()
+            .ToListAsync();
+        
+        return Ok(result);
+    }
+    
+    [HttpPost("GetDisciplinesBySpeciality")]
+    public async Task<IActionResult> GetDisciplinesBySpecialityFilter(bool specialityFilter)
+    {
+        var result = await _db.Set<Discipline>()
+            .Where(x=>x.Specialty == specialityFilter)
+            .ToListAsync();
+        
+        return Ok(result);
+    }
+    
+    [HttpPost("GetDisciplinesByIsDeleted")]
+    public async Task<IActionResult> GetDisciplinesByIsDeletedFilter(bool isDeletedFilter)
+    {
+        var result = await _db.Set<Discipline>()
+            .Where(x=>x.IsDeleted == isDeletedFilter)
             .ToListAsync();
         
         return Ok(result);

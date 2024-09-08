@@ -1,4 +1,6 @@
-﻿namespace Sol.Domain.Entity;
+﻿using System.Text.Json.Serialization;
+
+namespace Sol.Domain.Entity;
 
 public class Discipline
 {
@@ -11,7 +13,10 @@ public class Discipline
 
     public bool IsDeleted { get; set; }
 
-
+    [JsonIgnore]
     public ICollection<AcademicGroup> AcademicGroups { get; set; }
+
+    [JsonIgnore] 
+    public ICollection<PerformanceBool> PerformanceBools { get; set; }
 }
 
