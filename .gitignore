@@ -1,7 +1,4 @@
 ﻿/Sol.Api/bin
-/Sol.Api/obj
-/Sol.Api/obj/Debug
-/Sol.Api/obj/Debug/net8.0
-/Sol.Api/obj/Debug/net8.0/Sol.Api.MvcApplicationPartsAssemblyInfo.cs
-
+/Sol.Api/obj/
+/Sol.Api/logs
 /.idea
