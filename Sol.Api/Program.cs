@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLog.Web;
 using Sol.Api.DependencyInjection;
+using Sol.Api.MiddleWares;
 using Sol.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +28,7 @@ try
     }
 
     app.UseAuthorization();
-
+    app.UseMiddleware<ExceptionHandlerMiddleware>();
     app.MapControllers();
 
     app.Run();
