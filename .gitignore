@@ -3,4 +3,6 @@
 /Sol.Api/logs
 /Sol.Domain/obj
 /Sol.Domain/bin
+/Sol.Tests/obj
+/Sol.Tests/bin
 /.idea
