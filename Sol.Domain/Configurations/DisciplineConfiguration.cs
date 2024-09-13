@@ -22,21 +22,21 @@ public class DisciplineConfiguration : IEntityTypeConfiguration<Discipline>
             {
                 Id = 1,
                 IsDeleted = false,
-                Specialty = true,
+                Specialty = 1,
                 Name = "Матеша1",
             },
             new Discipline()
             {
                 Id = 2,
                 IsDeleted = false,
-                Specialty = true,
+                Specialty = 2,
                 Name = "Матеша2",
             },
             new Discipline()
             {
                 Id = 3,
                 IsDeleted = false,
-                Specialty = true,
+                Specialty = 3,
                 Name = "Матеша3",
             },
         });

@@ -11,8 +11,8 @@ using Sol.Domain;
 namespace Sol.Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240908111735_l,")]
-    partial class l
+    [Migration("20240913191247_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -99,8 +99,8 @@ namespace Sol.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("Specialty")
-                        .HasColumnType("boolean");
+                    b.Property<int>("Specialty")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -112,21 +112,21 @@ namespace Sol.Domain.Migrations
                             Id = 1,
                             IsDeleted = false,
                             Name = "Матеша1",
-                            Specialty = true
+                            Specialty = 1
                         },
                         new
                         {
                             Id = 2,
                             IsDeleted = false,
                             Name = "Матеша2",
-                            Specialty = true
+                            Specialty = 2
                         },
                         new
                         {
                             Id = 3,
                             IsDeleted = false,
                             Name = "Матеша3",
-                            Specialty = true
+                            Specialty = 3
                         });
                 });
 
@@ -174,6 +174,83 @@ namespace Sol.Domain.Migrations
                         {
                             AcademicGroupId = 3,
                             DisciplineId = 2
+                        });
+                });
+
+            modelBuilder.Entity("Sol.Domain.Entity.PerformanceBool", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DisciplineId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Result")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DisciplineId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("PerformanceBool");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DisciplineId = 1,
+                            Result = true,
+                            StudentId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DisciplineId = 2,
+                            Result = false,
+                            StudentId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DisciplineId = 3,
+                            Result = true,
+                            StudentId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DisciplineId = 3,
+                            Result = true,
+                            StudentId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DisciplineId = 3,
+                            Result = true,
+                            StudentId = 3
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DisciplineId = 3,
+                            Result = true,
+                            StudentId = 4
+                        },
+                        new
+                        {
+                            Id = 7,
+                            DisciplineId = 1,
+                            Result = false,
+                            StudentId = 4
                         });
                 });
 
@@ -272,6 +349,25 @@ namespace Sol.Domain.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Sol.Domain.Entity.PerformanceBool", b =>
+                {
+                    b.HasOne("Sol.Domain.Entity.Discipline", "Discipline")
+                        .WithMany("PerformanceBools")
+                        .HasForeignKey("DisciplineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sol.Domain.Entity.Student", "Student")
+                        .WithMany("PerformanceBools")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Discipline");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("Sol.Domain.Entity.Student", b =>
                 {
                     b.HasOne("Sol.Domain.Entity.AcademicGroup", "AcademicGroup")
@@ -286,6 +382,16 @@ namespace Sol.Domain.Migrations
             modelBuilder.Entity("Sol.Domain.Entity.AcademicGroup", b =>
                 {
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("Sol.Domain.Entity.Discipline", b =>
+                {
+                    b.Navigation("PerformanceBools");
+                });
+
+            modelBuilder.Entity("Sol.Domain.Entity.Student", b =>
+                {
+                    b.Navigation("PerformanceBools");
                 });
 #pragma warning restore 612, 618
         }

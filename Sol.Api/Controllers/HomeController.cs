@@ -16,22 +16,21 @@ public class HomeController : ControllerBase
     {
         _logger = logger;
         _db = db;
-        _logger.LogDebug(1, "NLog injected into HomeController");
     }
-
-    
 
     [HttpGet("GetDisciplines")]
     public async Task<IActionResult> GetDisciplines()
     {
         var result = await _db.Set<Discipline>()
+            .Skip(2)
+            .Take(1)
             .ToListAsync();
         
         return Ok(result);
     }
     
     [HttpPost("GetDisciplinesBySpeciality")]
-    public async Task<IActionResult> GetDisciplinesBySpecialityFilter(bool specialityFilter)
+    public async Task<IActionResult> GetDisciplinesBySpecialityFilter(int specialityFilter)
     {
         var result = await _db.Set<Discipline>()
             .Where(x=>x.Specialty == specialityFilter)

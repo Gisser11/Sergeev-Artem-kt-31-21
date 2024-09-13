@@ -38,7 +38,7 @@ public class ExceptionHandlerMiddleware
             {
                 default:
                     httpResponse.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    responseModel.Errors = new List<string> { exception.InnerException?.Message };
+                    responseModel.Errors = new List<string> { "Произошла ошибка."  };
                     break;
             }
             await httpResponse.WriteAsJsonAsync(responseModel);

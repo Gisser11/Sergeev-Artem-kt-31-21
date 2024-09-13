@@ -1,4 +1,5 @@
 ﻿using Sol.Api.Services;
+using Sol.Api.Services.Students;
 
 namespace Sol.Api.DependencyInjection;
 
