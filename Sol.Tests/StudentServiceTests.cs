@@ -6,6 +6,7 @@ using Sol.Domain;
 using Sol.Domain.Entity;
 using System.Threading;
 using System.Threading.Tasks;
+using Sol.Api.Services.Students;
 using Xunit;
 
 namespace Sol.Tests
@@ -38,10 +39,9 @@ namespace Sol.Tests
             await _dbContext.SaveChangesAsync();
 
             // Act
-            var result = await _studentService.DeleteUser(studentId);
+            await _studentService.DeleteUser(studentId);
 
             // Assert
-            Assert.True(result);
             Assert.Null(await _dbContext.Set<Student>().FirstOrDefaultAsync(x=>x.Id == studentId)); 
         }
     }

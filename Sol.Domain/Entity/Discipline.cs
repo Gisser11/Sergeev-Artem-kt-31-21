@@ -7,9 +7,8 @@ public class Discipline
     public int Id { get; set; }
 
     public string Name { get; set; }
-
-    // true - гумм. false - техн.
-    public bool Specialty { get; set; }
+    
+    public int Specialty { get; set; }
 
     public bool IsDeleted { get; set; }
 

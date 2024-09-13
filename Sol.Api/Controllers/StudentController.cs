@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Sol.Api.Services;
+using Sol.Api.Services.Students;
 using Sol.Domain;
 using Sol.Domain.Dto;
 using Sol.Domain.Entity;
@@ -19,26 +20,26 @@ public class StudentController : ControllerBase
         _studentService = studentService;
     }
     
-    [HttpPost]
+    [HttpPost("Create")]
     public async Task<IActionResult> CreateStudent([FromBody] StudentDto student)
     {
-        var res = await _studentService.CreateUser(student);
+        await _studentService.CreateUser(student);
         
-        return Ok(res);
+        return Ok();
     }
 
-    [HttpPost("Edit")]
+    [HttpPut("Edit")]
     public async Task<IActionResult> EditStudent([FromBody] StudentDto student)
     {
-        var res = await _studentService.EditUser(student);
+        await _studentService.EditUser(student);
         
-        return Ok(res);
+        return Ok();
     }
-
-    [HttpDelete]
+    
+    [HttpDelete("Delete")]
     public async Task<IActionResult> DeleteStudent(int id)
     {
-        var res = await _studentService.DeleteUser(id);
+        await _studentService.DeleteUser(id);
         
         return Ok();
     }
@@ -50,8 +51,9 @@ public class StudentController : ControllerBase
             .FirstOrDefaultAsync(x => x.Id == id);
         if (model == null)
         {
-            return BadRequest("Не найдено! Пользователя не существует");
+            return NotFound("Не найдено! Пользователя не существует");
         }
+        
         return Ok(model);
     }
 }

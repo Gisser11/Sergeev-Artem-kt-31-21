@@ -96,8 +96,8 @@ namespace Sol.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("Specialty")
-                        .HasColumnType("boolean");
+                    b.Property<int>("Specialty")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -109,21 +109,21 @@ namespace Sol.Domain.Migrations
                             Id = 1,
                             IsDeleted = false,
                             Name = "Матеша1",
-                            Specialty = true
+                            Specialty = 1
                         },
                         new
                         {
                             Id = 2,
                             IsDeleted = false,
                             Name = "Матеша2",
-                            Specialty = true
+                            Specialty = 2
                         },
                         new
                         {
                             Id = 3,
                             IsDeleted = false,
                             Name = "Матеша3",
-                            Specialty = true
+                            Specialty = 3
                         });
                 });
 
