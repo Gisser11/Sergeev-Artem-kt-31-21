@@ -17,7 +17,7 @@ public class HomeController : ControllerBase
         _logger = logger;
         _db = db;
     }
-
+    //test
     [HttpGet("GetDisciplines")]
     public async Task<IActionResult> GetDisciplines()
     {
