@@ -37,7 +37,7 @@ public class StudentService : IStudentService
         
         if (checkStudent == null)
         {
-            throw new Exception();
+            throw new Exception();//??
         }
 
         checkStudent.Surname = student.Surname;
@@ -61,9 +61,7 @@ public class StudentService : IStudentService
         }
 
         _db.Remove(model);
-        throw new Exception();
+        throw new Exception();//??
         await _db.SaveChangesAsync();
-
-
     }
 }

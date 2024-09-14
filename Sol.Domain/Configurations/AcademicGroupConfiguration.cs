@@ -12,11 +12,12 @@ public class AcademicGroupConfiguration : IEntityTypeConfiguration<AcademicGroup
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
-        builder.HasMany(x => x.Students)
-            .WithOne(x => x.AcademicGroup)
-            .HasForeignKey(x => x.AcademicGroupId)
-            .OnDelete(DeleteBehavior.Cascade);
+        //builder.HasMany(x => x.Students)
+        //    .WithOne(x => x.AcademicGroup)
+        //    .HasForeignKey(x => x.AcademicGroupId)
+        //    .OnDelete(DeleteBehavior.Cascade);
 
+        //Прописать конфигурацию колонок
         builder.HasMany(x => x.Disciplines)
             .WithMany(x => x.AcademicGroups)
             .UsingEntity<AcademicGroupAndDisciplines>(
@@ -33,7 +34,7 @@ public class AcademicGroupConfiguration : IEntityTypeConfiguration<AcademicGroup
             .HasForeignKey(s => s.AcademicGroupId)
             .OnDelete(DeleteBehavior.Cascade);
 
-
+        
         builder.HasData(new List<AcademicGroup>
         {
             new AcademicGroup()

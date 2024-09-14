@@ -6,7 +6,7 @@ using Sol.Domain.Entity;
 namespace Sol.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]")]//название контроллера
 public class HomeController : ControllerBase
 {
     private readonly ILogger<HomeController> _logger;
@@ -17,7 +17,7 @@ public class HomeController : ControllerBase
         _logger = logger;
         _db = db;
     }
-    //test
+    
     [HttpGet("GetDisciplines")]
     public async Task<IActionResult> GetDisciplines()
     {

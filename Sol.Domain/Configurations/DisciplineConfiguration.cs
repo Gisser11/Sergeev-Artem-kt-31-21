@@ -11,6 +11,7 @@ public class DisciplineConfiguration : IEntityTypeConfiguration<Discipline>
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
         
+        //??
         builder.HasMany(s => s.PerformanceBools)
             .WithOne(p => p.Discipline)
             .HasForeignKey(p => p.DisciplineId)
