@@ -7,12 +7,12 @@ namespace Sol.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]//название контроллера
-public class HomeController : ControllerBase
+public class DisciplineController : ControllerBase
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<DisciplineController> _logger;
     private readonly ApplicationDbContext _db;
 
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
+    public DisciplineController(ILogger<DisciplineController> logger, ApplicationDbContext db)
     {
         _logger = logger;
         _db = db;

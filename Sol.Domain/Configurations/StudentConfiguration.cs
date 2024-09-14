@@ -10,7 +10,38 @@ public class StudentConfiguration: IEntityTypeConfiguration<Student>
     {
         builder.HasKey(x => x.Id);
         
-        builder.Property(x => x.Id).ValueGeneratedOnAdd();
+        builder.Property(x => x.Id)
+            .HasColumnName("id")
+            .ValueGeneratedOnAdd();
+        
+        builder.Property(x => x.Surname)
+            .HasColumnName("surname")
+            .ValueGeneratedOnAdd();
+        
+        builder.Property(x => x.Name)
+            .HasColumnName("name")
+            .ValueGeneratedOnAdd();
+        
+        builder.Property(x => x.ThirdName)
+            .HasColumnName("thirdName")
+            .ValueGeneratedOnAdd();
+        
+        builder.Property(x => x.IsDeleted)
+            .HasColumnName("isDeleted")
+            .ValueGeneratedOnAdd();
+        
+        builder.Property(x => x.AcademicGroupId)
+            .HasColumnName("academicGroupId")
+            .ValueGeneratedOnAdd();
+        
+        builder.HasIndex(x => x.AcademicGroupId);
+        
+        
+        
+        builder.HasOne(x => x.AcademicGroup)
+            .WithMany(x => x.Students)
+            .HasForeignKey(x => x.AcademicGroupId)
+            .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasData(new List<Student>
         {

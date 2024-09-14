@@ -8,6 +8,7 @@ public class GroupDisciplineConfiguration : IEntityTypeConfiguration<AcademicGro
 {
     public void Configure(EntityTypeBuilder<AcademicGroupAndDisciplines> builder)
     {
+        
         builder.HasData(new List<AcademicGroupAndDisciplines>
         {
             new AcademicGroupAndDisciplines()

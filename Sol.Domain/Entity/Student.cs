@@ -20,6 +20,6 @@ public class Student
 
     public ICollection<PerformanceBool> PerformanceBools { get; set; }
     
-    /*public ICollection<PerfomanceMark> PerfomanceMarks { get; set; }??*/
+    public ICollection<PerfomanceMark> PerfomanceMarks { get; set; }
 
 }

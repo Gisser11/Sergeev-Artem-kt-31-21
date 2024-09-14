@@ -11,12 +11,12 @@ public class AcademicGroupConfiguration : IEntityTypeConfiguration<AcademicGroup
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
-
-        //builder.HasMany(x => x.Students)
-        //    .WithOne(x => x.AcademicGroup)
-        //    .HasForeignKey(x => x.AcademicGroupId)
-        //    .OnDelete(DeleteBehavior.Cascade);
-
+        builder.Property(x => x.Name)
+            .HasColumnName("name");
+        builder.Property(x => x.Specialty)
+            .HasColumnName("specialty");
+        builder.Property(x => x.Year)
+            .HasColumnName("year");
         //Прописать конфигурацию колонок
         builder.HasMany(x => x.Disciplines)
             .WithMany(x => x.AcademicGroups)
@@ -29,11 +29,6 @@ public class AcademicGroupConfiguration : IEntityTypeConfiguration<AcademicGroup
                     .HasForeignKey(right => right.AcademicGroupId)
             );
         
-        builder.HasMany(ag => ag.Students)
-            .WithOne(s => s.AcademicGroup)
-            .HasForeignKey(s => s.AcademicGroupId)
-            .OnDelete(DeleteBehavior.Cascade);
-
         
         builder.HasData(new List<AcademicGroup>
         {
@@ -41,14 +36,14 @@ public class AcademicGroupConfiguration : IEntityTypeConfiguration<AcademicGroup
             {
                 Id = 1,
                 Name = "kt-41-21",
-                Specialty = false,
+                Specialty = 1,
                 Year = 2021
             },
             new AcademicGroup()
             {
                 Id = 2,
                 Name = "kt-51-21",
-                Specialty = true,
+                Specialty = 1,
                 Year = 2021
             }
             ,
@@ -56,7 +51,7 @@ public class AcademicGroupConfiguration : IEntityTypeConfiguration<AcademicGroup
             {
                 Id = 3,
                 Name = "kt-55-21",
-                Specialty = true,
+                Specialty = 2,
                 Year = 2021
             }
             ,
@@ -64,14 +59,14 @@ public class AcademicGroupConfiguration : IEntityTypeConfiguration<AcademicGroup
             {
                 Id = 4,
                 Name = "kt-41-22",
-                Specialty = false,
+                Specialty = 2,
                 Year = 2022
             },
             new AcademicGroup()
             {
                 Id = 5,
                 Name = "kt-41-22",
-                Specialty = true,
+                Specialty = 1,
                 Year = 2022
             }
         });

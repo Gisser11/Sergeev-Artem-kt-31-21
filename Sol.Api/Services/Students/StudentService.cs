@@ -34,11 +34,6 @@ public class StudentService : IStudentService
     {
         var checkStudent = await _db.Set<Student>()
             .FirstOrDefaultAsync(x => x.Id == student.Id);
-        
-        if (checkStudent == null)
-        {
-            throw new Exception();//??
-        }
 
         checkStudent.Surname = student.Surname;
         checkStudent.Name = student.Name;
@@ -61,7 +56,6 @@ public class StudentService : IStudentService
         }
 
         _db.Remove(model);
-        throw new Exception();//??
         await _db.SaveChangesAsync();
     }
 }

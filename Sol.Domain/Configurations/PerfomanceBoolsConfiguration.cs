@@ -11,13 +11,24 @@ public class PerfomanceBoolsConfiguration : IEntityTypeConfiguration<Performance
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
+
+        builder.Property(x => x.Result)
+            .HasColumnName("result");
+
+        builder.HasIndex(x => x.DisciplineId);
+        builder.HasIndex(x => x.StudentId);
         
         builder.HasOne(pb => pb.Student)
             .WithMany(s => s.PerformanceBools)
             .HasForeignKey(pb => pb.StudentId)
             .OnDelete(DeleteBehavior.Cascade);
         
-    
+        builder.HasOne(s => s.Discipline)
+            .WithMany(d => d.PerformanceBools)
+            .HasForeignKey(p => p.DisciplineId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        
         
         builder.HasData(new List<PerformanceBool>
         {   

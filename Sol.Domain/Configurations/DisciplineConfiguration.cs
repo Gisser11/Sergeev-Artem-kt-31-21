@@ -9,13 +9,23 @@ public class DisciplineConfiguration : IEntityTypeConfiguration<Discipline>
     public void Configure(EntityTypeBuilder<Discipline> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).ValueGeneratedOnAdd();
+        builder.Property(x => x.Id)
+            .HasColumnName("id")
+            .ValueGeneratedOnAdd();
         
-        //??
-        builder.HasMany(s => s.PerformanceBools)
-            .WithOne(p => p.Discipline)
-            .HasForeignKey(p => p.DisciplineId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.Property(x => x.Name)
+            .HasColumnName("name");
+        
+        builder.Property(x => x.Specialty)
+            .HasColumnName("speciality");
+        builder.Property(x => x.IsDeleted)
+            .HasColumnName("isDeleted");
+        builder.Property(x => x.Name)
+            .HasColumnName("name");
+        
+        
+        
+        
         
         builder.HasData(new List<Discipline>
         {
