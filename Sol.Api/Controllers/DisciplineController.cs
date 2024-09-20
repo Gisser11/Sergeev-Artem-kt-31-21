@@ -6,7 +6,7 @@ using Sol.Domain.Entity;
 namespace Sol.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]//название контроллера
+[Route("api/[controller]")]
 public class DisciplineController : ControllerBase
 {
     private readonly ILogger<DisciplineController> _logger;

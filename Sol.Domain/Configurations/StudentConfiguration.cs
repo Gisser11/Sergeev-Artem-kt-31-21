@@ -7,6 +7,7 @@ namespace Sol.Domain.Configurations;
 
 public class StudentConfiguration: IEntityTypeConfiguration<Student>
 {
+    //добавить название таблицы как методичке
     public void Configure(EntityTypeBuilder<Student> builder)
     {
         builder.HasKey(x => x.Id);
@@ -43,13 +44,14 @@ public class StudentConfiguration: IEntityTypeConfiguration<Student>
             .HasColumnType(ColumnType.Int)
             .HasComment("группа студента");
         
-        builder.HasIndex(x => x.AcademicGroupId);
+        builder.HasIndex(x => x.AcademicGroupId);//название индекса как в методичке
         
         
         
         builder.HasOne(x => x.AcademicGroup)
             .WithMany(x => x.Students)
             .HasForeignKey(x => x.AcademicGroupId)
+            //.HasConstarainName
             .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasData(new List<Student>

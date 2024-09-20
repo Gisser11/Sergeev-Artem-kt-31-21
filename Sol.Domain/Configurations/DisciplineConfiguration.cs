@@ -25,7 +25,7 @@ public class DisciplineConfiguration : IEntityTypeConfiguration<Discipline>
         
         builder.Property(x => x.Specialty)
             .IsRequired()
-            .HasColumnName("i_speciality")
+            .HasColumnName("n_speciality")
             .HasColumnType(ColumnType.Int)
             .HasComment("Специальность студента");
         

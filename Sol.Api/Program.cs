@@ -12,6 +12,7 @@ logger.Debug("init main");
 try
 {
     builder.Services.AddControllers();
+    //строка подключения
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseNpgsql("Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=mydatabase;\n"));
     builder.Services.AddEndpointsApiExplorer();
