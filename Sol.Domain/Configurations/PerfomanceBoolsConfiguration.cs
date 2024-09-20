@@ -1,19 +1,28 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sol.Domain.Entity;
+using Sol.Domain.Helpers;
 
 namespace Sol.Domain.Configurations;
 
 public class PerfomanceBoolsConfiguration : IEntityTypeConfiguration<PerformanceBool>
 {
+    private const string TableName = "cd_perfomance_bools";
     public void Configure(EntityTypeBuilder<PerformanceBool> builder)
     {
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.Id)
+            .HasName($"pk_{TableName}_perf_bools_id");
 
-        builder.Property(x => x.Id).ValueGeneratedOnAdd();
+        builder.Property(x => x.Id)
+            .HasColumnType(ColumnType.Int)
+            .HasComment("Первичный ключ")
+            .ValueGeneratedOnAdd();
 
         builder.Property(x => x.Result)
-            .HasColumnName("result");
+            .IsRequired()
+            .HasColumnType(ColumnType.Int)
+            .HasColumnName("b_result")
+            .HasComment("Первичный ключ");
 
         builder.HasIndex(x => x.DisciplineId);
         builder.HasIndex(x => x.StudentId);

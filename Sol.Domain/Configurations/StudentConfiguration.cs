@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sol.Domain.Entity;
+using Sol.Domain.Helpers;
 
 namespace Sol.Domain.Configurations;
 
@@ -15,24 +16,32 @@ public class StudentConfiguration: IEntityTypeConfiguration<Student>
             .ValueGeneratedOnAdd();
         
         builder.Property(x => x.Surname)
-            .HasColumnName("surname")
-            .ValueGeneratedOnAdd();
+            .HasColumnName("с_surname")
+            .HasColumnType(ColumnType.String)
+            .HasComment("Фамилия студента");
         
         builder.Property(x => x.Name)
-            .HasColumnName("name")
-            .ValueGeneratedOnAdd();
+            .IsRequired()
+            .HasColumnName("c_name")
+            .HasColumnType(ColumnType.String)
+            .HasComment("Имя студента");
         
         builder.Property(x => x.ThirdName)
-            .HasColumnName("thirdName")
-            .ValueGeneratedOnAdd();
+            .HasColumnName("c_thirdname")
+            .HasColumnType(ColumnType.String)
+            .HasComment("Фамилия студента");
         
         builder.Property(x => x.IsDeleted)
-            .HasColumnName("isDeleted")
-            .ValueGeneratedOnAdd();
+            .IsRequired()
+            .HasColumnName("b_deleted")
+            .HasColumnType(ColumnType.Bool)
+            .HasComment("существует ли студента");
+
         
         builder.Property(x => x.AcademicGroupId)
-            .HasColumnName("academicGroupId")
-            .ValueGeneratedOnAdd();
+            .HasColumnName("i_academic_group")
+            .HasColumnType(ColumnType.Int)
+            .HasComment("группа студента");
         
         builder.HasIndex(x => x.AcademicGroupId);
         

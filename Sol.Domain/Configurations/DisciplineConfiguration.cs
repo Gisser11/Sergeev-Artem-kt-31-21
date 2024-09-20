@@ -1,31 +1,39 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sol.Domain.Entity;
+using Sol.Domain.Helpers;
 
 namespace Sol.Domain.Configurations;
 
 public class DisciplineConfiguration : IEntityTypeConfiguration<Discipline>
 {
+    private const string TableName = "cd_discipline";
+    
     public void Configure(EntityTypeBuilder<Discipline> builder)
     {
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.Id)
+            .HasName($"pk_{TableName}_discipline_id");
+        
         builder.Property(x => x.Id)
-            .HasColumnName("id")
             .ValueGeneratedOnAdd();
         
         builder.Property(x => x.Name)
-            .HasColumnName("name");
+            .IsRequired()
+            .HasColumnName("c_name")
+            .HasColumnType(ColumnType.String).HasMaxLength(100)
+            .HasComment("Имя студента");
         
         builder.Property(x => x.Specialty)
-            .HasColumnName("speciality");
+            .IsRequired()
+            .HasColumnName("i_speciality")
+            .HasColumnType(ColumnType.Int)
+            .HasComment("Специальность студента");
+        
         builder.Property(x => x.IsDeleted)
-            .HasColumnName("isDeleted");
-        builder.Property(x => x.Name)
-            .HasColumnName("name");
-        
-        
-        
-        
+            .HasColumnName("b_deleted")
+            .IsRequired()
+            .HasColumnType(ColumnType.Bool)
+            .HasComment("Существует ли студент");
         
         builder.HasData(new List<Discipline>
         {

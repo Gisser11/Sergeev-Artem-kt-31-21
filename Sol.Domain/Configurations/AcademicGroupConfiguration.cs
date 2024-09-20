@@ -12,12 +12,15 @@ public class AcademicGroupConfiguration : IEntityTypeConfiguration<AcademicGroup
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
         builder.Property(x => x.Name)
-            .HasColumnName("name");
+            .HasColumnName("c_name")
+            .IsRequired();
         builder.Property(x => x.Specialty)
-            .HasColumnName("specialty");
+            .IsRequired()
+            .HasColumnName("n_specialty");
         builder.Property(x => x.Year)
-            .HasColumnName("year");
-        //Прописать конфигурацию колонок
+            .IsRequired()
+            .HasColumnName("n_year");
+        
         builder.HasMany(x => x.Disciplines)
             .WithMany(x => x.AcademicGroups)
             .UsingEntity<AcademicGroupAndDisciplines>(

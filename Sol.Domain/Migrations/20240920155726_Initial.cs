@@ -19,9 +19,9 @@ namespace Sol.Domain.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Specialty = table.Column<bool>(type: "boolean", nullable: false),
-                    Year = table.Column<int>(type: "integer", nullable: false)
+                    c_name = table.Column<string>(type: "text", nullable: false),
+                    n_specialty = table.Column<int>(type: "integer", nullable: false),
+                    n_year = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,33 +34,33 @@ namespace Sol.Domain.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Specialty = table.Column<int>(type: "integer", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                    c_name = table.Column<string>(type: "varchar", maxLength: 100, nullable: false, comment: "Имя студента"),
+                    i_speciality = table.Column<int>(type: "int4", nullable: false, comment: "Специальность студента"),
+                    b_deleted = table.Column<bool>(type: "bool", nullable: false, comment: "Существует ли студент")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Discipline", x => x.Id);
+                    table.PrimaryKey("pk_cd_discipline_discipline_id", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Student",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Surname = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    ThirdName = table.Column<string>(type: "text", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    AcademicGroupId = table.Column<int>(type: "integer", nullable: false)
+                    с_surname = table.Column<string>(type: "varchar", nullable: false, comment: "Фамилия студента"),
+                    c_name = table.Column<string>(type: "varchar", nullable: false, comment: "Имя студента"),
+                    c_thirdname = table.Column<string>(type: "varchar", nullable: false, comment: "Фамилия студента"),
+                    b_deleted = table.Column<bool>(type: "bool", nullable: false, comment: "существует ли студента"),
+                    i_academic_group = table.Column<int>(type: "int4", nullable: false, comment: "группа студента")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Student", x => x.Id);
+                    table.PrimaryKey("PK_Student", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Student_AcademicGroup_AcademicGroupId",
-                        column: x => x.AcademicGroupId,
+                        name: "FK_Student_AcademicGroup_i_academic_group",
+                        column: x => x.i_academic_group,
                         principalTable: "AcademicGroup",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -91,18 +91,45 @@ namespace Sol.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PerformanceBool",
+                name: "PerfomanceMark",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Result = table.Column<bool>(type: "boolean", nullable: false),
+                    b_result = table.Column<int>(type: "int4", nullable: false, comment: "Первичный ключ"),
+                    fk_cd_perfomance_marks_discipline_id = table.Column<int>(type: "int4", nullable: false, comment: "вторичный ключ"),
+                    fk_cd_perfomance_marks_student_id = table.Column<int>(type: "int4", nullable: false, comment: "вторичный ключ")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("cd_cd_perfomance_marks_perf_marks_id", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PerfomanceMark_Discipline_fk_cd_perfomance_marks_discipline~",
+                        column: x => x.fk_cd_perfomance_marks_discipline_id,
+                        principalTable: "Discipline",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PerfomanceMark_Student_fk_cd_perfomance_marks_student_id",
+                        column: x => x.fk_cd_perfomance_marks_student_id,
+                        principalTable: "Student",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PerformanceBool",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int4", nullable: false, comment: "Первичный ключ")
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    b_result = table.Column<int>(type: "int4", nullable: false, comment: "Первичный ключ"),
                     DisciplineId = table.Column<int>(type: "integer", nullable: false),
                     StudentId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PerformanceBool", x => x.Id);
+                    table.PrimaryKey("pk_cd_perfomance_bools_perf_bools_id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_PerformanceBool_Discipline_DisciplineId",
                         column: x => x.DisciplineId,
@@ -113,25 +140,25 @@ namespace Sol.Domain.Migrations
                         name: "FK_PerformanceBool_Student_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Student",
-                        principalColumn: "Id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "AcademicGroup",
-                columns: new[] { "Id", "Name", "Specialty", "Year" },
+                columns: new[] { "Id", "c_name", "n_specialty", "n_year" },
                 values: new object[,]
                 {
-                    { 1, "kt-41-21", false, 2021 },
-                    { 2, "kt-51-21", true, 2021 },
-                    { 3, "kt-55-21", true, 2021 },
-                    { 4, "kt-41-22", false, 2022 },
-                    { 5, "kt-41-22", true, 2022 }
+                    { 1, "kt-41-21", 1, 2021 },
+                    { 2, "kt-51-21", 1, 2021 },
+                    { 3, "kt-55-21", 2, 2021 },
+                    { 4, "kt-41-22", 2, 2022 },
+                    { 5, "kt-41-22", 1, 2022 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Discipline",
-                columns: new[] { "Id", "IsDeleted", "Name", "Specialty" },
+                columns: new[] { "Id", "b_deleted", "c_name", "i_speciality" },
                 values: new object[,]
                 {
                     { 1, false, "Матеша1", 1 },
@@ -154,7 +181,7 @@ namespace Sol.Domain.Migrations
 
             migrationBuilder.InsertData(
                 table: "Student",
-                columns: new[] { "Id", "AcademicGroupId", "IsDeleted", "Name", "Surname", "ThirdName" },
+                columns: new[] { "id", "i_academic_group", "b_deleted", "c_name", "с_surname", "c_thirdname" },
                 values: new object[,]
                 {
                     { 1, 1, false, "Iskakov", "", "" },
@@ -166,22 +193,32 @@ namespace Sol.Domain.Migrations
 
             migrationBuilder.InsertData(
                 table: "PerformanceBool",
-                columns: new[] { "Id", "DisciplineId", "Result", "StudentId" },
+                columns: new[] { "Id", "DisciplineId", "b_result", "StudentId" },
                 values: new object[,]
                 {
-                    { 1, 1, true, 1 },
-                    { 2, 2, false, 1 },
-                    { 3, 3, true, 1 },
-                    { 4, 3, true, 2 },
-                    { 5, 3, true, 3 },
-                    { 6, 3, true, 4 },
-                    { 7, 1, false, 4 }
+                    { 1, 1, 1, 1 },
+                    { 2, 2, 0, 1 },
+                    { 3, 3, 1, 1 },
+                    { 4, 3, 1, 2 },
+                    { 5, 3, 1, 3 },
+                    { 6, 3, 1, 4 },
+                    { 7, 1, 0, 4 }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AcademicGroupAndDisciplines_DisciplineId",
                 table: "AcademicGroupAndDisciplines",
                 column: "DisciplineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PerfomanceMark_fk_cd_perfomance_marks_discipline_id",
+                table: "PerfomanceMark",
+                column: "fk_cd_perfomance_marks_discipline_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PerfomanceMark_fk_cd_perfomance_marks_student_id",
+                table: "PerfomanceMark",
+                column: "fk_cd_perfomance_marks_student_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PerformanceBool_DisciplineId",
@@ -194,9 +231,9 @@ namespace Sol.Domain.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Student_AcademicGroupId",
+                name: "IX_Student_i_academic_group",
                 table: "Student",
-                column: "AcademicGroupId");
+                column: "i_academic_group");
         }
 
         /// <inheritdoc />
@@ -204,6 +241,9 @@ namespace Sol.Domain.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AcademicGroupAndDisciplines");
+
+            migrationBuilder.DropTable(
+                name: "PerfomanceMark");
 
             migrationBuilder.DropTable(
                 name: "PerformanceBool");

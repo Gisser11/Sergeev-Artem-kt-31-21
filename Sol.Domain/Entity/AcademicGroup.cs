@@ -6,7 +6,6 @@ public class AcademicGroup
 
     public string Name { get; set; }
 
-    // true - гумм. false - техн.??
     public int Specialty { get; set; }
     
     public ushort Year { get; set; }

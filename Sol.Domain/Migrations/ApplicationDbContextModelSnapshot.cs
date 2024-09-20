@@ -31,13 +31,16 @@ namespace Sol.Domain.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("c_name");
 
-                    b.Property<bool>("Specialty")
-                        .HasColumnType("boolean");
+                    b.Property<int>("Specialty")
+                        .HasColumnType("integer")
+                        .HasColumnName("n_specialty");
 
                     b.Property<int>("Year")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("n_year");
 
                     b.HasKey("Id");
 
@@ -48,35 +51,35 @@ namespace Sol.Domain.Migrations
                         {
                             Id = 1,
                             Name = "kt-41-21",
-                            Specialty = false,
+                            Specialty = 1,
                             Year = 2021
                         },
                         new
                         {
                             Id = 2,
                             Name = "kt-51-21",
-                            Specialty = true,
+                            Specialty = 1,
                             Year = 2021
                         },
                         new
                         {
                             Id = 3,
                             Name = "kt-55-21",
-                            Specialty = true,
+                            Specialty = 2,
                             Year = 2021
                         },
                         new
                         {
                             Id = 4,
                             Name = "kt-41-22",
-                            Specialty = false,
+                            Specialty = 2,
                             Year = 2022
                         },
                         new
                         {
                             Id = 5,
                             Name = "kt-41-22",
-                            Specialty = true,
+                            Specialty = 1,
                             Year = 2022
                         });
                 });
@@ -90,16 +93,24 @@ namespace Sol.Domain.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bool")
+                        .HasColumnName("b_deleted")
+                        .HasComment("Существует ли студент");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar")
+                        .HasColumnName("c_name")
+                        .HasComment("Имя студента");
 
                     b.Property<int>("Specialty")
-                        .HasColumnType("integer");
+                        .HasColumnType("int4")
+                        .HasColumnName("i_speciality")
+                        .HasComment("Специальность студента");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_cd_discipline_discipline_id");
 
                     b.ToTable("Discipline");
 
@@ -174,7 +185,7 @@ namespace Sol.Domain.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Sol.Domain.Entity.PerformanceBool", b =>
+            modelBuilder.Entity("Sol.Domain.Entity.PerfomanceMark", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -183,15 +194,52 @@ namespace Sol.Domain.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DisciplineId")
+                        .HasColumnType("int4")
+                        .HasColumnName("fk_cd_perfomance_marks_discipline_id")
+                        .HasComment("вторичный ключ");
+
+                    b.Property<int>("Result")
+                        .HasColumnType("int4")
+                        .HasColumnName("b_result")
+                        .HasComment("Первичный ключ");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int4")
+                        .HasColumnName("fk_cd_perfomance_marks_student_id")
+                        .HasComment("вторичный ключ");
+
+                    b.HasKey("Id")
+                        .HasName("cd_cd_perfomance_marks_perf_marks_id");
+
+                    b.HasIndex("DisciplineId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("PerfomanceMark");
+                });
+
+            modelBuilder.Entity("Sol.Domain.Entity.PerformanceBool", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int4")
+                        .HasComment("Первичный ключ");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DisciplineId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Result")
-                        .HasColumnType("boolean");
+                    b.Property<int>("Result")
+                        .HasColumnType("int4")
+                        .HasColumnName("b_result")
+                        .HasComment("Первичный ключ");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_cd_perfomance_bools_perf_bools_id");
 
                     b.HasIndex("DisciplineId");
 
@@ -204,49 +252,49 @@ namespace Sol.Domain.Migrations
                         {
                             Id = 1,
                             DisciplineId = 1,
-                            Result = true,
+                            Result = 1,
                             StudentId = 1
                         },
                         new
                         {
                             Id = 2,
                             DisciplineId = 2,
-                            Result = false,
+                            Result = 0,
                             StudentId = 1
                         },
                         new
                         {
                             Id = 3,
                             DisciplineId = 3,
-                            Result = true,
+                            Result = 1,
                             StudentId = 1
                         },
                         new
                         {
                             Id = 4,
                             DisciplineId = 3,
-                            Result = true,
+                            Result = 1,
                             StudentId = 2
                         },
                         new
                         {
                             Id = 5,
                             DisciplineId = 3,
-                            Result = true,
+                            Result = 1,
                             StudentId = 3
                         },
                         new
                         {
                             Id = 6,
                             DisciplineId = 3,
-                            Result = true,
+                            Result = 1,
                             StudentId = 4
                         },
                         new
                         {
                             Id = 7,
                             DisciplineId = 1,
-                            Result = false,
+                            Result = 0,
                             StudentId = 4
                         });
                 });
@@ -255,27 +303,38 @@ namespace Sol.Domain.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AcademicGroupId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int4")
+                        .HasColumnName("i_academic_group")
+                        .HasComment("группа студента");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bool")
+                        .HasColumnName("b_deleted")
+                        .HasComment("существует ли студента");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar")
+                        .HasColumnName("c_name")
+                        .HasComment("Имя студента");
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar")
+                        .HasColumnName("с_surname")
+                        .HasComment("Фамилия студента");
 
                     b.Property<string>("ThirdName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar")
+                        .HasColumnName("c_thirdname")
+                        .HasComment("Фамилия студента");
 
                     b.HasKey("Id");
 
@@ -346,6 +405,25 @@ namespace Sol.Domain.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Sol.Domain.Entity.PerfomanceMark", b =>
+                {
+                    b.HasOne("Sol.Domain.Entity.Discipline", "Discipline")
+                        .WithMany()
+                        .HasForeignKey("DisciplineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sol.Domain.Entity.Student", "Student")
+                        .WithMany("PerfomanceMarks")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Discipline");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("Sol.Domain.Entity.PerformanceBool", b =>
                 {
                     b.HasOne("Sol.Domain.Entity.Discipline", "Discipline")
@@ -388,6 +466,8 @@ namespace Sol.Domain.Migrations
 
             modelBuilder.Entity("Sol.Domain.Entity.Student", b =>
                 {
+                    b.Navigation("PerfomanceMarks");
+
                     b.Navigation("PerformanceBools");
                 });
 #pragma warning restore 612, 618
