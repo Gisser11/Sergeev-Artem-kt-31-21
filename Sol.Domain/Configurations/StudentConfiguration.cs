@@ -7,13 +7,13 @@ namespace Sol.Domain.Configurations;
 
 public class StudentConfiguration: IEntityTypeConfiguration<Student>
 {
-    //добавить название таблицы как методичке
+    private const string TableName = "cd_Student";
     public void Configure(EntityTypeBuilder<Student> builder)
     {
         builder.HasKey(x => x.Id);
         
         builder.Property(x => x.Id)
-            .HasColumnName("id")
+            .HasColumnName($"pk_{TableName}_id")
             .ValueGeneratedOnAdd();
         
         builder.Property(x => x.Surname)

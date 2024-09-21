@@ -2,21 +2,32 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sol.Domain.Entity;
 using Sol.Domain.Entity.ManyToMany;
+using Sol.Domain.Helpers;
 
 namespace Sol.Domain.Configurations;
 
 public class AcademicGroupConfiguration : IEntityTypeConfiguration<AcademicGroup>
 {
+    private const string TableName = "cd_AcademicGroup";
+    
     public void Configure(EntityTypeBuilder<AcademicGroup> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Id).ValueGeneratedOnAdd();
+        
+        builder.Property(x => x.Id)
+            .HasColumnName($"pk_{TableName}_academic_group_id")
+            .ValueGeneratedOnAdd();
+        
         builder.Property(x => x.Name)
+            .IsRequired()
             .HasColumnName("c_name")
-            .IsRequired();
+            .HasColumnType(ColumnType.String)
+            .HasComment("Имя студента");
+        
         builder.Property(x => x.Specialty)
             .IsRequired()
             .HasColumnName("n_specialty");
+        
         builder.Property(x => x.Year)
             .IsRequired()
             .HasColumnName("n_year");

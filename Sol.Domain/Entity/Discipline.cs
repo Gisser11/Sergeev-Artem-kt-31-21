@@ -17,5 +17,6 @@ public class Discipline
 
     [JsonIgnore] 
     public ICollection<PerformanceBool> PerformanceBools { get; set; }
+    public ICollection<PerfomanceMark> PerformanceMarks { get; set; }
 }
 

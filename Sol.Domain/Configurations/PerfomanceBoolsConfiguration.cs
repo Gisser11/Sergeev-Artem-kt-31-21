@@ -20,21 +20,36 @@ public class PerfomanceBoolsConfiguration : IEntityTypeConfiguration<Performance
 
         builder.Property(x => x.Result)
             .IsRequired()
-            .HasColumnType(ColumnType.Int)
+            .HasColumnType(ColumnType.Bool)
             .HasColumnName("b_result")
             .HasComment("Первичный ключ");
+        
+        builder.Property(x => x.DisciplineId)
+            .IsRequired()
+            .HasColumnType(ColumnType.Int)
+            .HasComment("вторичный ключ");
+        
+        builder.Property(x => x.StudentId)
+            .IsRequired()
+            .HasColumnType(ColumnType.Int)
+            .HasComment("вторичный ключ");
 
-        builder.HasIndex(x => x.DisciplineId);
-        builder.HasIndex(x => x.StudentId);
+        builder.HasIndex(x => x.DisciplineId, "fk_discipline_id");
+        //builder.Property(x => x.DisciplineId).HasColumnName("Вторичный ключ диспциплины");
+        
+        builder.HasIndex(x => x.StudentId, "fk_student_id");
+        //builder.Property(x => x.DisciplineId).HasColumnName("Вторичный ключ студента");
         
         builder.HasOne(pb => pb.Student)
             .WithMany(s => s.PerformanceBools)
             .HasForeignKey(pb => pb.StudentId)
+            .HasConstraintName("fk_student_id")
             .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasOne(s => s.Discipline)
             .WithMany(d => d.PerformanceBools)
             .HasForeignKey(p => p.DisciplineId)
+            .HasConstraintName("fk_discipline_id")
             .OnDelete(DeleteBehavior.Cascade);
         
         
